@@ -1,0 +1,8 @@
+---
+title: "Some OJS+Typescript demos"
+listing: 
+  type: table
+  contents:
+    - "demos/*.qmd"
+---
+

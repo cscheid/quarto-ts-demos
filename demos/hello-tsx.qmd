@@ -1,0 +1,18 @@
+---
+title: Hello, TSX
+---
+
+Quarto also offers support for TSX syntax. Note that we do _not_ use React ourselves; we simply support the syntax and construct the DOM elements directly. That, together with OJS reactivity, gets you a long way towards pleasant DOM manipulation.
+
+```{ojs}
+import { buildList, buildCircles } from "./hello-tsx.tsx"
+
+buildList([1, 2, 3])
+buildCircles([10, 15, 20])
+```
+
+Caveats:
+
+- Quarto currently only supports `tsx`, and not `jsx`.
+- We construct DOM elements through standard calls to `createElement`. There's Observable's reactivity but no additional TSX runtime support.
+- We intend to support this syntax fully but the implementation is currently experimental.

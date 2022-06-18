@@ -1,0 +1,31 @@
+---
+title: Hello, TypeScript
+---
+
+In OJS blocks, you can import directly from TypeScript modules.
+
+```{ojs}
+import { test } from "./hello-typescript.ts";
+
+test(10)
+```
+
+Features:
+
+- Quarto will typecheck and compile the module to JS for you at render time
+- Supports JS (ES6), TS (quarto currently runs TypeScript 4.6.3, through Deno 1.22.3), and [TSX](hello-tsx.qmd). 
+- The import paths need to be either relative, `./foo.ts`, `../bar.js`, etc, or "root-relative": `/lib/foo.ts`.
+  - A root-relative import resolves into an actual _relative_ import that points to the path, as if starting from the root of the quarto project.
+
+Some caveats: 
+
+- Quarto cannot yet typecheck OJS blocks themselves. In other words, OJS remains "JavaScript-ish".
+- The OJS import statement is limited to named imports; `import * as foo from` and `import default from` are not supported. Import aliases, on the other hand, _are_ supported, eg. `import { foo as bar } from "./baz.ts";`
+
+This feature doesn't interfere with the other `import` functionality from OJS and Observable:
+
+- Other [ObservableHQ import syntax still works](https://observablehq.com/@observablehq/import), such as:
+  - importing ObservableHQ modules from `@username/notebookName`,
+  - importing ObservableHQ modules from a published unlisted notebook by the ID, eg `c7abb6bc5da9efd9`.
+  - ObservableHQ module reuse via `import-with`
+- You can import from other `.qmd` files with `ojs` blocks in them, in the same way you can import ObservableHQ notebooks.
