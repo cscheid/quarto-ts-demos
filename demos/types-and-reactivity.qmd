@@ -1,0 +1,46 @@
+---
+title: "Types and reactivity"
+---
+
+A TypeScript (or TSX) function can be called from reactive OJS code:
+
+```{ojs}
+viewof count = Inputs.range([1, 20], {
+  label: "Count",
+  step: 1
+});
+```
+
+```{ojs}
+import { doubleCount } from "./types-and-reactivity.ts"
+
+md`Double the count is **${doubleCount(count)}**`
+```
+
+Although the TypeScript code itself is type checked _at compile time_ (not at run time!), the OJS code isn't. So if you pass a bad type to your TypeScript function, you won't get an error. For example, here my slider is converted to a letter if it's an even number:
+
+```{ojs}
+letterOrNumber = count % 2 == 0 ?
+  String.fromCharCode(64 + count) :
+  count;
+```
+
+```{ojs}
+md`Letter-or-number is **${letterOrNumber}**`
+```
+
+```{ojs}
+md`Double the letter-or-number is **${doubleCount(letterOrNumber)}**`
+```
+
+But if you call a TypeScript function elsewhere within your TypeScript code, that can be type checked when the page is built.
+
+For example, if I added the following to `types-and-reactivity.ts`:
+
+```ts
+doubleCount("B");
+```
+
+My editor would flag an error:
+
+> Agument of type 'string' is not assignable to parameter of type 'number'. ts(2345)
